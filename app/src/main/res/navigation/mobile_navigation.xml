@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_trangchu">
+
+    <fragment
+        android:id="@+id/nav_trangchu"
+        android:name="btl_android_2.com.ui.trangChu.fragment_trangchu"
+        android:label="@string/menu_trangchu"
+        tools:layout="@layout/fragment_trangchu" />
+    <fragment
+        android:id="@+id/nav_tailieu"
+        android:name="btl_android_2.com.ui.trangChu.fragment_trangchu"
+        android:label="@string/menu_tailieu"
+        tools:layout="@layout/fragment_tailieu" />
+
+    <fragment
+        android:id="@+id/nav_danhsach"
+        android:name="btl_android_2.com.ui.danhSach.fragment_danhsach"
+        android:label="@string/menu_danhsach"
+        tools:layout="@layout/fragment_danhsach" />
+    <fragment
+        android:id="@+id/nav_chiase"
+        android:name="btl_android_2.com.ui.chiaSe.fragment_chiase"
+        android:label="@string/menu_chiase"
+        tools:layout="@layout/fragment_chiase" />
+
+    <fragment
+        android:id="@+id/nav_dang"
+        android:name="btl_android_2.com.ui.dangBan.fragment_dangban"
+        android:label="@string/menu_dang"
+        tools:layout="@layout/fragment_dangban" />
+</navigation>
