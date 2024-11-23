@@ -30,7 +30,6 @@
         <activity
             android:name=".ui.danhSach.activity_tailieu"
             android:exported="false" />
-<<<<<<< HEAD
         <!--        <activity-->
         <!--            android:name=".MainActivity"-->
         <!--            android:exported="true"-->
@@ -46,28 +45,15 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".LoginActivity" android:exported="true">
-=======
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Btl_android_2.NoActionBar">
->>>>>>> df6e9fd87c428c1d06872eac682b7b0d7b9f5daa
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".RegisterActivity">
         </activity>
         <!-- Đã xóa khai báo sai của fragment -->
     </application>
 
 </manifest>
-=======
-    </application>
-
-</manifest>
->>>>>>> df6e9fd87c428c1d06872eac682b7b0d7b9f5daa
