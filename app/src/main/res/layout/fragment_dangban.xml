@@ -1,16 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.dangBan.fragment_dangban">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-<!--        android:text="@string/hello_blank_fragment"-->
+        android:layout_height="130dp">
+        <TextView
+            android:textColor="@color/white"
+            android:background="#A0EA93"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="28sp"
+            android:text="Bán Tài Liệu"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Tên tài liệu:"
+                android:textSize="18sp"
+                android:gravity="center"/>
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+
+                android:id="@+id/ten_tai_lieu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="text"
+                android:background="@drawable/border_edittext"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mô tả:"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="45dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/mo_ta"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:inputType="textMultiLine"
+                android:background="@drawable/border_edittext"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giá:"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="66dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/gia"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:background="@drawable/border_edittext"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nội dung:"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:name="android.permission.READ_EXTERNAL_STORAGE"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/chon_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chọn file" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/edt_noi_dung"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="textMultiLine"
+                android:background="@drawable/border_edittext"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Button
+            android:id="@+id/dang_ban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng bán" />
+
+    </LinearLayout>
 
 
 
-</FrameLayout>
+</LinearLayout>

@@ -1,10 +1,11 @@
 package btl_android_2.com.ui.DBSQLite;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import btl_android_2.com.MainActivity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -32,11 +33,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "noiDung TEXT, " +
                     "trangThai INTEGER, " +
                     "isFree INTEGER, " +
-                    "gia INTEGER" +
+                    "gia INTEGER, " +
+                    "idAccount INTEGER, " +
+                    "FOREIGN KEY (idAccount) REFERENCES Account(id)" + // Thiết lập khóa ngoại
                     ");";
 
+
     public DatabaseHelper(Context context) {
+
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        insertAdmin();
+
+
     }
 
     public static synchronized DatabaseHelper getInstance(Context context) {
@@ -59,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
     public boolean insertData(String phone, String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -68,18 +78,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert("Account", null, contentValues);
         return result != -1;
     }
-    public boolean checkUser(String username, String password) {
+    public Cursor checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT * FROM " + "Account" + " WHERE " + COL_3 + " = ? AND " + COL_4 + " = ?";
         String query = "SELECT * FROM Account WHERE tenDangNhap = ? AND matKhau = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{username, password});
-        boolean exists = cursor.getCount() > 0;
-        cursor.close();
-        return exists;
+        return db.rawQuery(query, new String[]{username, password});
     }
+
     public Cursor getLatestDocuments(int limit) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM TaiLieu ORDER BY id DESC LIMIT ?";
         return db.rawQuery(query, new String[]{String.valueOf(limit)});
     }
+
+    /////////////////////////Insert dữ liệu để test////////////
+    public boolean insertAdmin() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("email", "admin@example.com");
+        contentValues.put("tenDangNhap", "admin");
+        contentValues.put("tenNguoiDung", "Admin User");
+        contentValues.put("matKhau", "admin");
+        contentValues.put("isAdmin", 1);
+        contentValues.put("soDienThoai", "0123456789");
+        long result = db.insert("Account", null, contentValues);
+        return result != -1;
+    }
+
+    //////////////////////////////////////////////////////end/////////////////
+
+    public boolean chiaSeTaiLieu(String tenTaiLieu, String moTa, String noiDung)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues  = new ContentValues();
+        contentValues.put("tieuDe", tenTaiLieu);
+        contentValues.put("noiDung", noiDung);
+        contentValues.put("moTa", moTa);
+        contentValues.put("trangThai", 1);
+        contentValues.put("isFree", 1);
+        contentValues.put("gia", 0);
+        contentValues.put("idAccount", MainActivity.Id);
+        long result = db.insert("Tailieu", null, contentValues);
+        return result != - 1;
+    }
+
+
+
 }
+

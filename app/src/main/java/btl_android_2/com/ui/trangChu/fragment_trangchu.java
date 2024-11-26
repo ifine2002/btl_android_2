@@ -1,5 +1,6 @@
 package btl_android_2.com.ui.trangChu;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +8,73 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import btl_android_2.com.MainActivity;
 import btl_android_2.com.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_trangchu#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class fragment_trangchu extends Fragment {
+    private Button btnTaiLieuCuaToi, btnDanhSachTaiLieu, btnChiaSeTaiLieu, btnDangBanTaiLieu;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public fragment_trangchu() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_trangchu.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_trangchu newInstance(String param1, String param2) {
-        fragment_trangchu fragment = new fragment_trangchu();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trangchu, container, false);
+
+        View view= inflater.inflate(R.layout.fragment_trangchu, container, false);
+
+        btnTaiLieuCuaToi = view.findViewById(R.id.btnTaiLieuCuaToi);
+        btnDanhSachTaiLieu = view.findViewById(R.id.btnDanhSachTaiLieu);
+        btnChiaSeTaiLieu = view.findViewById(R.id.btnChiaSeTaiLieu);
+        btnDangBanTaiLieu = view.findViewById(R.id.btnDangBanTaiLieu);
+
+        // Lắng nghe sự kiện click cho nút "Tài liệu của tôi"
+        btnTaiLieuCuaToi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo Intent để chuyển sang màn hình "Tài liệu của tôi"
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Lắng nghe sự kiện click cho nút "Danh sách tài liệu"
+        btnDanhSachTaiLieu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo Intent để chuyển sang màn hình "Danh sách tài liệu"
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Lắng nghe sự kiện click cho nút "Chia sẻ tài liệu"
+        btnChiaSeTaiLieu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo Intent để chuyển sang màn hình "Chia sẻ tài liệu"
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Lắng nghe sự kiện click cho nút "Đăng bán tài liệu"
+        btnDangBanTaiLieu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo Intent để chuyển sang màn hình "Đăng bán tài liệu"
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
     }
 }

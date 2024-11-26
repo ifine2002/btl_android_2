@@ -1,6 +1,7 @@
 package btl_android_2.com;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import btl_android_2.com.ui.DBSQLite.DatabaseHelper;
+import btl_android_2.com.ui.danhSach.activity_tailieu;
 import btl_android_2.com.ui.trangChu.fragment_trangchu;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,8 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_dangnhap);
         myDb = new DatabaseHelper(this);
-
-
         editUserName = findViewById(R.id.editUserName);
         editPassword = findViewById(R.id.editPassword);
         btnDongY = findViewById(R.id.btnDongY);
@@ -42,15 +42,27 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Validate the username and password
-                boolean isValid = myDb.checkUser(username, password);
-                if (isValid) {
+                Cursor cursor = myDb.checkUser(username, password);
+                if (cursor.moveToFirst()) {
+                    int isAdmin = cursor.getInt(cursor.getColumnIndexOrThrow("isAdmin"));
+                    MainActivity.tenDangNhap = username;
+                    MainActivity.Id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+
+                    cursor.close();
 
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent); // Bắt đầu hoạt động
-                    finish();
+
+                    if (isAdmin == 1) {
+                        // User is an admin, navigate to AdminActivity
+                        Intent intent = new Intent(LoginActivity.this, TrangchuquantriActivity.class);
+                        startActivity(intent);
+                    } else {
+                        // User is not an admin, navigate to MainActivity
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 } else {
+                    cursor.close();
                     Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.trangChu.fragment_trangchu">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarTrangchu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:title="Trang Chủ"
-        android:titleTextColor="@android:color/white"/>
+
 
     <!-- Content -->
     <LinearLayout
@@ -21,8 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_below="@id/toolbarTrangchu"
+
         android:background="@android:color/white">
 
         <TextView
