@@ -1,66 +1,93 @@
 package btl_android_2.com.ui.chiaSe;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import btl_android_2.com.R;
+import btl_android_2.com.ui.DBSQLite.DatabaseHelper;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_chiase#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class fragment_chiase extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    DatabaseHelper myDb;
+    EditText etTenTaiLieu;
+    EditText etMoTa;
+    EditText etNoiDung;
+    Button btnChiaSe;
+    Button btnChonFile;
 
     public fragment_chiase() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_chiase.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_chiase newInstance(String param1, String param2) {
-        fragment_chiase fragment = new fragment_chiase();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chiase, container, false);
+        View view = inflater.inflate(R.layout.fragment_chiase, container, false);
+        etTenTaiLieu = view.findViewById(R.id.ten_tai_lieu);
+        etMoTa = view.findViewById(R.id.mo_ta);
+        etNoiDung = view.findViewById(R.id.noi_dung);
+        btnChiaSe = view.findViewById(R.id.chia_se);
+        btnChonFile = view.findViewById(R.id.chon_file);
+
+        myDb = new DatabaseHelper(getContext());
+
+        btnChiaSe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mota = etMoTa.getText().toString().trim();
+                String noidung = etNoiDung.getText().toString().trim();
+                String tentailieu = etTenTaiLieu.getText().toString().trim();
+
+                Log.d("FragmentChiase", "Button ChiaSe clicked");
+
+                if (TextUtils.isEmpty(mota) || TextUtils.isEmpty(noidung) || TextUtils.isEmpty(tentailieu)) {
+                    Toast.makeText(requireContext(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Log.d("FragmentChiase", "All fields are filled");
+
+                myDb.chiaSeTaiLieu(tentailieu, mota, noidung);
+                Log.d("FragmentChiase", "Document shared to database");
+
+                showDialog(requireContext(), "Chia sẻ tài liệu thành công");
+            }
+        });
+
+        return view;
+    }
+
+    private void showDialog(Context context, String message) {
+        Log.d("FragmentChiase", "showDialog called with message: " + message);
+
+        // Tạo một AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setCancelable(true);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Sử dụng Handler để đóng dialog sau 3 giây (3000 milliseconds)
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }, 3000); // 3000 milliseconds = 3 seconds
     }
 }
