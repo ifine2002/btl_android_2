@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_trangchu" />
     <fragment
         android:id="@+id/nav_tailieu"
-        android:name="btl_android_2.com.ui.taiLieu.fragment_tailieu"
+        android:name="btl_android_2.com.ui.taiLieu.fragment_tailieucuatoi"
         android:label="@string/menu_tailieu"
         tools:layout="@layout/fragment_tailieucuatoi" />
 

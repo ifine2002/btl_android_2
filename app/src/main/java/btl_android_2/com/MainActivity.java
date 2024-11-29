@@ -146,53 +146,53 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //ví dụ thêm dữ liệu vào database bảng Account. Chạy thử thấy hiển thị được thì xóa đi
-        String addContent = "INSERT INTO Account (email, tenDangNhap, tenNguoiDung, matKhau, isAdmin, soDienThoai) VALUES (?, ?, ?, ?, ?, ?)";
-        db.execSQL( addContent,
-                new Object[]{"example@example.com", "gitclone", "Example User", "password123", 0, "0123456789"});
-//        txttentaikhoan = findViewById(R.id.txttentaikhoan);
-//        txttennguoidung = findViewById(R.id.txttennguoidung);
-        String[] projection = {
-                "id",
-                "email",
-                "tenDangNhap",
-                "tenNguoiDung",
-                "matKhau",
-                "isAdmin",
-                "soDienThoai"
-        };
-
-        String orderBy = "id DESC";
-        String limit = "1";
-
-        //tạo con trỏ
-        Cursor cursor = db.query(
-                "Account",
-                projection,
-                null, // No selection clause
-                null, // No selection arguments
-                null, // No group by
-                null, // No having
-                orderBy, // Order by id descending
-                limit // Limit to 1 result
-        );
-
-        // Lấy ra dữ liệu hiển thị ở 2 text view mới thêm ở trong màn hình thêm
-        if (cursor.moveToFirst()) {
-            // Extract data from cursor
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
-            String tenDangNhap = cursor.getString(cursor.getColumnIndexOrThrow("tenDangNhap"));
-            String tenNguoiDung = cursor.getString(cursor.getColumnIndexOrThrow("tenNguoiDung"));
-            String matKhau = cursor.getString(cursor.getColumnIndexOrThrow("matKhau"));
-            String isAdmin = cursor.getString(cursor.getColumnIndexOrThrow("isAdmin"));
-            String soDienThoai = cursor.getString(cursor.getColumnIndexOrThrow("soDienThoai"));
-
-            // Display data (for example, log it or set it to a TextView)
-//            txttentaikhoan.setText(tenDangNhap);
-//            txttennguoidung.setText(tenNguoiDung);
-        }
-
-        cursor.close();
+//        String addContent = "INSERT INTO Account (email, tenDangNhap, tenNguoiDung, matKhau, isAdmin, soDienThoai) VALUES (?, ?, ?, ?, ?, ?)";
+//        db.execSQL( addContent,
+//                new Object[]{"example@example.com", "gitclone", "Example User", "password123", 0, "0123456789"});
+////        txttentaikhoan = findViewById(R.id.txttentaikhoan);
+////        txttennguoidung = findViewById(R.id.txttennguoidung);
+//        String[] projection = {
+//                "id",
+//                "email",
+//                "tenDangNhap",
+//                "tenNguoiDung",
+//                "matKhau",
+//                "isAdmin",
+//                "soDienThoai"
+//        };
+//
+//        String orderBy = "id DESC";
+//        String limit = "1";
+//
+//        //tạo con trỏ
+//        Cursor cursor = db.query(
+//                "Account",
+//                projection,
+//                null, // No selection clause
+//                null, // No selection arguments
+//                null, // No group by
+//                null, // No having
+//                orderBy, // Order by id descending
+//                limit // Limit to 1 result
+//        );
+//
+//        // Lấy ra dữ liệu hiển thị ở 2 text view mới thêm ở trong màn hình thêm
+//        if (cursor.moveToFirst()) {
+//            // Extract data from cursor
+//            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+//            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+//            String tenDangNhap = cursor.getString(cursor.getColumnIndexOrThrow("tenDangNhap"));
+//            String tenNguoiDung = cursor.getString(cursor.getColumnIndexOrThrow("tenNguoiDung"));
+//            String matKhau = cursor.getString(cursor.getColumnIndexOrThrow("matKhau"));
+//            String isAdmin = cursor.getString(cursor.getColumnIndexOrThrow("isAdmin"));
+//            String soDienThoai = cursor.getString(cursor.getColumnIndexOrThrow("soDienThoai"));
+//
+//            // Display data (for example, log it or set it to a TextView)
+////            txttentaikhoan.setText(tenDangNhap);
+////            txttennguoidung.setText(tenNguoiDung);
+//        }
+//
+//        cursor.close();
         // xóa đến đây nếu chạy thấy hiển thị được
 /////////////////////////////////////////////////////////////////////////////////////////////
     }

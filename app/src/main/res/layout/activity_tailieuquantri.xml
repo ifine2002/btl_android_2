@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txtTieuDe"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="center"
@@ -33,7 +33,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tl_demo"
+            android:id="@+id/txtNoiDung"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,7 +61,7 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
             app:srcCompat="@drawable/user" />
 
         <TextView
-            android:id="@+id/money"
+            android:id="@+id/txtGia"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -79,7 +79,7 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/txtTacGia"
             android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
@@ -107,7 +107,7 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/txt_sđt"
+            android:id="@+id/txtSdt"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -116,13 +116,18 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
             android:text="0987736362"
             android:textSize="16dp" />
     </LinearLayout>
+    <Spinner
+        android:id="@+id/spinnerLoaiTaiLieu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center">
         <Button
-            android:id="@+id/btn_duyet1"
+            android:id="@+id/btnDuyet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/button"
@@ -131,7 +136,7 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
             android:textSize="18dp"
             android:layout_margin="10dp"/>
         <Button
-            android:id="@+id/btn_tuchoi1"
+            android:id="@+id/btnTuChoi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/button"

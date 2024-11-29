@@ -47,6 +47,7 @@
             <EditText
 
                 android:id="@+id/ten_tai_lieu"
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:inputType="text"
@@ -75,6 +76,7 @@
 
             <EditText
                 android:id="@+id/mo_ta"
+                android:padding="10dp"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -129,6 +131,8 @@
 
         <EditText
             android:id="@+id/noi_dung"
+            android:padding="10dp"
+            android:gravity="start"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
