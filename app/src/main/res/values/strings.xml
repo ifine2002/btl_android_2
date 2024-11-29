@@ -14,4 +14,14 @@
     <string name="menu_dang">Đăng bán tài liệu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="filter_options">
+        <item>Tất cả tài liệu</item>
+        <item>Tài liệu miễn phí</item>
+        <item>Tài liệu mất phí</item>
+    </string-array>
+    <string-array name="fillter_loc1">
+        <item>Tất cả tài liệu</item>
+        <item>Tài liệu 1</item>
+        <item>Tài liệu 2</item>
+    </string-array>
 </resources>

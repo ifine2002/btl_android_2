@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tieuDe1"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Luận văn tiến sĩ"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="26dp"
             android:layout_gravity="center"
@@ -38,12 +38,28 @@
         >
 
         <TextView
-            android:id="@+id/tl_demo"
+            android:id="@+id/moTa1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Thực trạng kiến thức của bà mẹ về phòng bệnh cho trẻ dưới 5 tuổi mắc tiêu
-chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
+            android:text=""
+            android:textSize="20dp"
+            android:textColor="@color/black"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+
+        <TextView
+            android:id="@+id/noiDung1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="20dp"
             android:textColor="@color/black"
 
@@ -66,7 +82,7 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
             app:srcCompat="@drawable/user" />
 
         <TextView
-            android:id="@+id/money"
+            android:id="@+id/gia1"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -82,10 +98,10 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tacGia1"
             android:layout_width="200dp"
             android:layout_height="30dp"
-            android:text="Tác giả: Vũ Đình Vinh"
+            android:text=""
             android:layout_marginLeft="210dp"
             android:textSize="18dp"
             android:layout_gravity="center"
@@ -112,14 +128,14 @@ chảy điều trị tại Bệnh viện Vinmec Hạ Long năm 2022"
             android:textSize="16dp"
             />
         <TextView
-            android:id="@+id/txt_sđt"
+            android:id="@+id/soDienThoai1"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:textSize="16dp"
             android:gravity="center"
             android:background="#EAC4C4"
-            android:text="0987736362"
+            android:text=""
             />
     </LinearLayout>
 

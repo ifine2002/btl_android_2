@@ -1,12 +1,8 @@
 package btl_android_2.com.ui.danhSach;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,91 +11,200 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import btl_android_2.com.R;
+import btl_android_2.com.ui.DBSQLite.DatabaseHelper;
 
-/**
-// * A simple {@link Fragment} subclass.
-// * Use the {@link fragment_danhsach# newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class fragment_danhsach extends Fragment {
-    private Spinner spinner;
-    private Button btn1,btn2;
-    private List<String> spinnerItems;
+    private RecyclerView recyclerView;
+    private TaiLieuAdapter adapter;
+    private List<TaiLieu> taiLieuList;
+    private DatabaseHelper databaseHelper;
+    private Spinner spinnerFilter, spinnerLoc;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_danhsach, container, false);
 
+        spinnerFilter = view.findViewById(R.id.spinnerFilter);
+        spinnerLoc = view.findViewById(R.id.spinner_loc);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        taiLieuList = new ArrayList<>();
+        adapter = new TaiLieuAdapter(getContext(), taiLieuList, this::showDetails);
+        recyclerView.setAdapter(adapter);
 
-        spinner = view.findViewById(R.id.sp_loc);
-        btn1=view.findViewById(R.id.btn_xem1);
-        btn2=view.findViewById(R.id.btn_xem2);
+        databaseHelper = DatabaseHelper.getInstance(getContext());
+//        databaseHelper.deleteDatabase(context);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.filter_options, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFilter.setAdapter(spinnerAdapter);
 
+//        ArrayAdapter<CharSequence> spinnerAdapter2 = ArrayAdapter.createFromResource(getContext(),
+//                R.array.fillter_loc1, android.R.layout.simple_spinner_item);
+//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerLoc.setAdapter(spinnerAdapter2);
 
+        loadLoaiTaiLieuToSpinner();
 
-
-        spinnerItems = new ArrayList<>();
-        spinnerItems.add("Tất cả");
-        spinnerItems.add("Tài liệu mất phí ");
-        spinnerItems.add("Tài liệu không mất phí");
-
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, spinnerItems);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-        spinner.setAdapter(adapter);
-
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String selectedItem = spinnerItems.get(position);
-
-                handleSelectedItem(selectedItem);
+                filterDocuments();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
-        });
-        btn();
+        };
+
+        spinnerLoc.setOnItemSelectedListener(onItemSelectedListener);
+        spinnerFilter.setOnItemSelectedListener(onItemSelectedListener);
+
+        loadTaiLieu(0);
 
         return view;
     }
-    private void btn(){
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), activity_tailieu.class);
-                // Start the new activity
-                startActivity(intent);
 
+    private void loadLoaiTaiLieuToSpinner() {
+        List<String> loaiTaiLieuList = new ArrayList<>();
+        loaiTaiLieuList.add("Tất cả tài liệu"); // Thêm tùy chọn "Tất cả tài liệu"
+        Cursor cursor = databaseHelper.getAllLoaiTaiLieu();
+        int loaiTaiLieuId = spinnerLoc.getSelectedItemPosition();
 
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), activity_tailieu_free.class);
-                // Start the new activity
-                startActivity(intent);
+        if (cursor != null && cursor.moveToFirst()) {
+            int tenLoaiIndex = cursor.getColumnIndex("ten");
+            loaiTaiLieuId++;
+            do {
 
+                if (tenLoaiIndex != -1) {
+                    String tenLoai = cursor.getString(tenLoaiIndex);
+                    loaiTaiLieuList.add(tenLoai);
+                }
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
 
-            }
-        });
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, loaiTaiLieuList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLoc.setAdapter(adapter);
     }
 
-    private void handleSelectedItem(String selectedItem) {
+    private void loadTaiLieu(int filterType) {
+        taiLieuList.clear();
+        Cursor cursor;
+        if (filterType == 0) {
+            cursor = databaseHelper.getAllDocuments();
+        } else {
+            cursor = databaseHelper.getDocumentsByType(filterType == 1);
+        }
 
+        if (cursor != null && cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex("id");
+            int tieuDeIndex = cursor.getColumnIndex("tieuDe");
+            int moTaIndex = cursor.getColumnIndex("moTa");
+            int noiDungIndex = cursor.getColumnIndex("noiDung");
+            int trangThaiIndex = cursor.getColumnIndex("trangThai");
+            int isFreeIndex = cursor.getColumnIndex("isFree");
+            int giaIndex = cursor.getColumnIndex("gia");
+            int idAccountIndex = cursor.getColumnIndex("idAccount");
+            int idLoaiTaiLieuIndex = cursor.getColumnIndex("idLoaiTaiLieu");
+
+            do {
+                if (tieuDeIndex != -1 && moTaIndex != -1 && noiDungIndex != -1 && giaIndex != -1 && idAccountIndex != -1 && idLoaiTaiLieuIndex != -1) {
+                    int id = cursor.getInt(idIndex);
+                    String tieuDe = cursor.getString(tieuDeIndex);
+                    String moTa = cursor.getString(moTaIndex);
+                    String noiDung = cursor.getString(noiDungIndex);
+                    int trangThai = cursor.getInt(trangThaiIndex);
+                    boolean isFree = cursor.getInt(isFreeIndex) == 1;
+                    int gia = cursor.getInt(giaIndex);
+                    int idAccount = cursor.getInt(idAccountIndex);
+                    int idLoaiTaiLieu = cursor.getInt(idLoaiTaiLieuIndex);
+                    TaiLieu taiLieu = new TaiLieu(id, tieuDe, moTa, noiDung, trangThai, isFree, gia, idAccount, idLoaiTaiLieu);
+
+                    taiLieuList.add(taiLieu);
+                }
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void filterDocuments() {
+        taiLieuList.clear();
+        int loaiTaiLieuId = spinnerLoc.getSelectedItemPosition(); // Vị trí 0 tương ứng với "Tất cả tài liệu"
+        boolean isFree = spinnerFilter.getSelectedItemPosition() == 1; // Giả định 0: Tất cả, 1: Miễn phí, 2: Mất phí
+
+        Cursor cursor;
+
+        if (loaiTaiLieuId == 0) { // Tất cả tài liệu
+            if (spinnerFilter.getSelectedItemPosition() == 0) { // Tất cả tài liệu và trạng thái miễn phí/mất phí
+                cursor = databaseHelper.getAllDocuments();
+            } else {
+                cursor = databaseHelper.getDocumentsByType(isFree);
+            }
+        } else {
+            loaiTaiLieuId--; // Giảm 1 để khớp với idLoaiTaiLieu trong cơ sở dữ liệu
+            if (spinnerFilter.getSelectedItemPosition() == 0) { // Tất cả tài liệu theo loại tài liệu
+                cursor = databaseHelper.getDocumentsByLoaiTaiLieu(loaiTaiLieuId);
+            } else {
+                cursor = databaseHelper.getDocumentsByLoaiTaiLieuAndType(loaiTaiLieuId, isFree);
+            }
+        }
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex("id");
+            int tieuDeIndex = cursor.getColumnIndex("tieuDe");
+            int moTaIndex = cursor.getColumnIndex("moTa");
+            int noiDungIndex = cursor.getColumnIndex("noiDung");
+            int trangThaiIndex = cursor.getColumnIndex("trangThai");
+            int isFreeIndex = cursor.getColumnIndex("isFree");
+            int giaIndex = cursor.getColumnIndex("gia");
+            int idAccountIndex = cursor.getColumnIndex("idAccount");
+            int idLoaiTaiLieuIndex = cursor.getColumnIndex("idLoaiTaiLieu");
+
+            do {
+                if (tieuDeIndex != -1 && moTaIndex != -1 && noiDungIndex != -1 && giaIndex != -1 && idAccountIndex != -1 && idLoaiTaiLieuIndex != -1) {
+                    int id = cursor.getInt(idIndex);
+                    String tieuDe = cursor.getString(tieuDeIndex);
+                    String moTa = cursor.getString(moTaIndex);
+                    String noiDung = cursor.getString(noiDungIndex);
+                    int trangThai = cursor.getInt(trangThaiIndex);
+                    boolean isFreeValue = cursor.getInt(isFreeIndex) == 1;
+                    int gia = cursor.getInt(giaIndex);
+                    int idAccount = cursor.getInt(idAccountIndex);
+                    int idLoaiTaiLieu = cursor.getInt(idLoaiTaiLieuIndex);
+
+                    TaiLieu taiLieu = new TaiLieu(id, tieuDe, moTa, noiDung, trangThai, isFreeValue, gia, idAccount, idLoaiTaiLieu);
+                    taiLieuList.add(taiLieu);
+                }
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showDetails(TaiLieu taiLieu) {
+        ChiTietTaiLieuActivity.startActivity(getContext(), taiLieu);
     }
 }

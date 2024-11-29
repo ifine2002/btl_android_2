@@ -6,14 +6,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import btl_android_2.com.MainActivity;
+import btl_android_2.com.ui.danhSach.TaiLieu;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SQLiteDB.db";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 14;
     private static DatabaseHelper instance;
+
 
     private static final String CREATE_TABLE_ACCOUNT =
             "CREATE TABLE Account (" +
@@ -25,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "isAdmin INTEGER, " +
                     "soDienThoai TEXT" +
                     ");";
-
     private static final String CREATE_TABLE_LOAITAILIEU =
             "CREATE TABLE LoaiTaiLieu (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -50,10 +56,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public DatabaseHelper(Context context) {
-
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
 //        insertAdmin();
+//        insertDummyUsers();
+//        insertDummyLoaiTaiLieu();
+//        insertDummyDocuments();
     }
 
     public static synchronized DatabaseHelper getInstance(Context context) {
@@ -65,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         try {
             db.execSQL(CREATE_TABLE_ACCOUNT);
             db.execSQL(CREATE_TABLE_LOAITAILIEU);
@@ -72,8 +80,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("DatabaseHelper", "Lỗi tạo bảng: " + e.getMessage());
         }
-    }
 
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -160,6 +168,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert("Tailieu", null, contentValues);
         return result != - 1;
     }
+    public Cursor getAllDocuments() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM TaiLieu", null);
+    }
 
     // Phương thức để lấy các tài liệu đang chờ duyệt
     // Giả sử 0 là trạng thái chờ duyệt, 1 là đã duyệt, -1 là từ chối
@@ -182,6 +194,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int rowsAffected = db.update("TaiLieu", contentValues, "id = ?", new String[]{String.valueOf(documentId)});
         return rowsAffected > 0;
     }
+    public Cursor getDocumentsByType(boolean isFree) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM TaiLieu WHERE isFree = ?", new String[]{isFree ? "1" : "0"});
+    }
 
 
 
@@ -191,18 +207,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Thêm dữ liệu giả định người dùng 1
         contentValues.put("email", "user1@example.com");
-        contentValues.put("tenDangNhap", "user1");
+        contentValues.put("tenDangNhap", "trang");
         contentValues.put("tenNguoiDung", "User 1");
-        contentValues.put("matKhau", "password1");
+        contentValues.put("matKhau", "trang");
         contentValues.put("isAdmin", 0);
         contentValues.put("soDienThoai", "0123456789");
         long result1 = db.insert("Account", null, contentValues);
 
         // Thêm dữ liệu giả định người dùng 2
         contentValues.put("email", "user2@example.com");
-        contentValues.put("tenDangNhap", "user2");
+        contentValues.put("tenDangNhap", "trang1");
         contentValues.put("tenNguoiDung", "User 2");
-        contentValues.put("matKhau", "password2");
+        contentValues.put("matKhau", "trang1");
         contentValues.put("isAdmin", 0);
         contentValues.put("soDienThoai", "9876543210");
         long result2 = db.insert("Account", null, contentValues);
@@ -221,8 +237,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("noiDung", "Nội dung tài liệu trang");
         contentValues.put("trangThai", 0); // Giả sử 0 là trạng thái chờ duyệt
         contentValues.put("isFree", 1);
-        contentValues.put("gia", 100000);
-        contentValues.put("idAccount", 1); // ID của người dùng tạo tài liệu
+        contentValues.put("gia", 0);
+        contentValues.put("idAccount", 22); // ID của người dùng tạo tài liệu
  //       contentValues.put("idLoaiTaiLieu", 1); // ID của loại tài liệu
         long result1 = db.insert("TaiLieu", null, contentValues);
 
@@ -232,8 +248,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("noiDung", "Nội dung tài liệu 2");
         contentValues.put("trangThai", 0); // Giả sử 1 là trạng thái đã duyệt
         contentValues.put("isFree", 0);
-        contentValues.put("gia", 200000);
-        contentValues.put("idAccount", 2); // ID của người dùng tạo tài liệu
+        contentValues.put("gia",100000);
+        contentValues.put("idAccount", 22); // ID của người dùng tạo tài liệu
 //        contentValues.put("idLoaiTaiLieu", 2); // ID của loại tài liệu
         long result2 = db.insert("TaiLieu", null, contentValues);
 
@@ -256,4 +272,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Kiểm tra xem liệu thêm dữ liệu thành công hay không
         return (result1 != -1 && result2 != -1);
     }
+
+    public Cursor getDocumentsByLoaiTaiLieuAndType(int loaiTaiLieuId, boolean isFree) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM TaiLieu WHERE idLoaiTaiLieu = ? AND isFree = ?";
+        return db.rawQuery(query, new String[]{String.valueOf(loaiTaiLieuId), isFree ? "1" : "0"});
+    }
+    public Cursor getDocumentsByLoaiTaiLieu(int loaiTaiLieuId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                "id",
+                "tieuDe",
+                "moTa",
+                "noiDung",
+                "trangThai",
+                "isFree",
+                "gia",
+                "idAccount",
+                "idLoaiTaiLieu"
+        };
+
+        String selection = "idLoaiTaiLieu = ?";
+        String[] selectionArgs = { String.valueOf(loaiTaiLieuId) };
+
+        return db.query("TaiLieu", projection, selection, selectionArgs, null, null, null);
+    }
+
+
+
+
 }

@@ -24,7 +24,7 @@ public class activity_tailieu extends AppCompatActivity {
         getView();
     }
     public void getView(){
-        txt=findViewById(R.id.txt_sđt);
+//        txt=findViewById(R.id.txt_sđt);
         btn=findViewById(R.id.btn_call);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

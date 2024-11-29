@@ -1,10 +1,10 @@
-<!-- item_tailieu.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
+        android:text="tieu de"
         android:id="@+id/txtTieuDe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,6 +13,7 @@
         android:padding="8dp"/>
 
     <TextView
+        android:text="mo ta"
         android:id="@+id/txtMoTa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,12 +31,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
             android:gravity="center"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:text="gia"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <Button
+            android:text="xoa"
             android:id="@+id/btnXoa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,6 +47,7 @@
             android:padding="8dp"/>
 
         <TextView
+            android:text="trang thai"
             android:id="@+id/txtTrangThai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,5 +61,4 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@android:color/darker_gray"/>
-
 </LinearLayout>
