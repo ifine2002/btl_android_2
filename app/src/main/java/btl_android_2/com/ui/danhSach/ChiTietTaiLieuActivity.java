@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -14,11 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import btl_android_2.com.R;
+import btl_android_2.com.ui.DBSQLite.DatabaseHelper;
 
 public class ChiTietTaiLieuActivity extends AppCompatActivity {
 
     private TextView txtTieuDe, txtTacGia, txtMoTa, txtNoiDung, txtGia, txtSoDienThoai;
     ImageButton btn;
+    private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +30,7 @@ public class ChiTietTaiLieuActivity extends AppCompatActivity {
         txtTieuDe = findViewById(R.id.tieuDe1);
         txtTacGia = findViewById(R.id.tacGia1);
         txtMoTa = findViewById(R.id.moTa1);
-        txtNoiDung = findViewById(R.id.noiDung1);
+//        txtNoiDung = findViewById(R.id.noiDung1);
         txtGia = findViewById(R.id.gia1);
         txtSoDienThoai=findViewById(R.id.soDienThoai1);
         btn=findViewById(R.id.btn_call);
@@ -36,12 +39,39 @@ public class ChiTietTaiLieuActivity extends AppCompatActivity {
         if (intent != null) {
             TaiLieu taiLieu = intent.getParcelableExtra("taiLieu");
             if (taiLieu != null) {
+                if(taiLieu.getIdAccount()==-1){
+                    String tenTacGia = databaseHelper.getTacGiaByIdAccount(taiLieu.getIdAccount());
+                    if (tenTacGia != null) {
+                        txtTacGia.setText(tenTacGia);
+                    } else {
+                        txtTacGia.setText("Không có tác giả"); // Xử lý trường hợp không tìm thấy tác giả
+                    }
+                    String sdt=databaseHelper.getSDTByIdAccount(taiLieu.getIdAccount());
+                    if(sdt!=null){
+                        txtSoDienThoai.setText(sdt);
+                    }
+                }
+
+
                 txtTieuDe.setText(taiLieu.getTieuDe());
-//                txtTacGia.setText(taiLieu.getTacGia());
-                txtMoTa.setText(taiLieu.getMoTa());
-                txtNoiDung.setText(taiLieu.getNoiDung());
+                String mota_html=taiLieu.getMoTa();
+//                +"<p>"+"vinhbrqua"+"</q>";
+//                txtNoiDung.setText(Html.fromHtml(
+//                        noidung_html,Html.FROM_HTML_MODE_COMPACT
+//                ));
+                txtMoTa.setText(Html.fromHtml(
+                        mota_html,Html.FROM_HTML_MODE_COMPACT
+                ));
+//                txtMoTa.setText();
+
+//                txtNoiDung.setText(taiLieu.getNoiDung());
 //                txtSoDienThoai.setText(taiLieu.getSoDienThoai());
-                txtGia.setText(taiLieu.isFree() ? "Miễn phí" : taiLieu.getGia() + " VND");
+                if(taiLieu.getGia()==0){
+                    txtGia.setText("vinhbr");;
+                }
+                else{
+                    txtGia.setText(taiLieu.getGia() + " VND");
+                }
             } else {
                 Toast.makeText(this, "Tài liệu không tồn tại", Toast.LENGTH_SHORT).show();
             }

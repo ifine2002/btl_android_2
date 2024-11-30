@@ -1,5 +1,6 @@
 package btl_android_2.com.ui.danhSach;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -204,7 +205,18 @@ public class fragment_danhsach extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    //    private void showDetails(TaiLieu taiLieu) {
+//        ChiTietTaiLieuActivity.startActivity(getContext(), taiLieu);
+//    }
     private void showDetails(TaiLieu taiLieu) {
-        ChiTietTaiLieuActivity.startActivity(getContext(), taiLieu);
+        if (taiLieu.isFree()) {
+            Intent intent = new Intent(getContext(), activity_tailieu_free.class);
+            intent.putExtra("taiLieu", taiLieu);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getContext(), activity_tailieu.class);
+            intent.putExtra("taiLieu", taiLieu);
+            startActivity(intent);
+        }
     }
 }

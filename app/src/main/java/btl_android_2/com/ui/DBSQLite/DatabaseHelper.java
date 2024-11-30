@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SQLiteDB.db";
 
-    private static final int DATABASE_VERSION = 23;
+    private static final int DATABASE_VERSION = 18;
     private static DatabaseHelper instance;
 
 
@@ -57,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        insertAdmin();
+        //insertAdmin();
 //        insertDummyUsers();
 //        insertDummyLoaiTaiLieu();
 //        insertDummyDocuments();
@@ -84,18 +84,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(1,'vinhbr@gmail.com','1','vinh','123',100,'09345835')";
         db.execSQL(insertAccount);
         String insertLoaiTaiLieu="INSERT INTO LoaiTaiLieu (ten) VALUES"+
-                "('Tài liệu công nghệ thông tin'),"+
-                "('Tài liệu kế toán'),"+
-                "('Tài liệu kinh tế'),"+
-                "('Tài liệu điện tử'),"+
-                "('Tài liệu luật'),"+
-                "('Tài liệu du lịch'),"+
-                "('Tài liệu lý luận chính trị'),"+
-                "('Tài liệu sư phạm')";
+                "('Tiêu đề 1'),"+
+                "('Tiêu đề 2')";
         db.execSQL(insertLoaiTaiLieu);
         String insertSampleData = "INSERT INTO TaiLieu (tieuDe, moTa, noiDung, trangThai, isFree, gia, idAccount, idLoaiTaiLieu) VALUES " +
-                "('Tài liệu công nghệ thông tin1', 'Mô tả 1', '<html lang=\"vi\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Tài liệu lập trình</title></head><body style=\"font-family: Arial, sans-serif;\"><h1>Tài liệu lập trình</h1><p>Lập trình là một lĩnh vực rất rộng và phong phú, bao gồm nhiều ngôn ngữ và công cụ khác nhau.</p><p>Để trở thành một lập trình viên giỏi, việc nắm vững tài liệu lập trình là vô cùng quan trọng.</p><p>Dưới đây là một số thông tin cơ bản về tài liệu lập trình và cách học lập trình hiệu quả.</p></body></html>\n', 1, 1, 0, 1, 0)," +
-                "('Tài liệu du lịch1', 'Mô tả 2', 'Nội dung 2', 1, 0, 1000, 2, 5)";
+                "('Tiêu đề 1', 'Mô tả 1', '<html lang=\"vi\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Tài liệu lập trình</title></head><body style=\"font-family: Arial, sans-serif;\"><h1>Tài liệu lập trình</h1><p>Lập trình là một lĩnh vực rất rộng và phong phú, bao gồm nhiều ngôn ngữ và công cụ khác nhau.</p><p>Để trở thành một lập trình viên giỏi, việc nắm vững tài liệu lập trình là vô cùng quan trọng.</p><p>Dưới đây là một số thông tin cơ bản về tài liệu lập trình và cách học lập trình hiệu quả.</p></body></html>\n', 1, 1, 0, 1, 0)," +
+                "('Tiêu đề 2', 'Mô tả 2', 'Nội dung 2', 1, 0, 1000, 2, 1)";
         db.execSQL(insertSampleData);
     }
 
@@ -117,21 +111,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("matKhau", password);
         long result = db.insert("Account", null, contentValues);
         return result != -1;
-    }
-    public boolean checkUsernameExist(String username) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Account WHERE tenDangNhap = ?", new String[]{username});
-        boolean exists = (cursor.getCount() > 0);
-        cursor.close();
-        return exists;
-    }
-
-    public boolean checkPhoneExist(String phone) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Account WHERE soDienThoai = ?", new String[]{phone});
-        boolean exists = (cursor.getCount() > 0);
-        cursor.close();
-        return exists;
     }
     public Cursor checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -213,14 +192,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert("Tailieu", null, contentValues);
         return result != - 1;
     }
-    //lấy dữ liệu từ bảng tài liệu
     public Cursor getAllDocuments() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM TaiLieu Where TrangThai = 1", null);
+        return db.rawQuery("SELECT * FROM TaiLieu WHERE TrangThai = 1", null);
     }
-//    WHERE  TrangThai = 1
 
-    //    WHERE TrangThai = 1
     // Phương thức để lấy các tài liệu đang chờ duyệt
     // Giả sử 0 là trạng thái chờ duyệt, 1 là đã duyệt, -1 là từ chối
     public Cursor getPendingDocuments() {
@@ -230,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Phương thức để cập nhật trạng thái tài liệu
-    public boolean capNhatTrangThai(int documentId, int status, long idLoaiTaiLieu) {
+    public boolean capNhatTrangThai(int documentId, int status, int idLoaiTaiLieu) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("trangThai", status); // Cập nhật trạng thái
@@ -242,10 +218,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int rowsAffected = db.update("TaiLieu", contentValues, "id = ?", new String[]{String.valueOf(documentId)});
         return rowsAffected > 0;
     }
-    //lọc tài liệu theo tài liệu có phí hay mất phí
     public Cursor getDocumentsByType(boolean isFree) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM TaiLieu WHERE isFree = ? AND trangThai = 1", new String[]{isFree ? "1" : "0"});
+        return db.rawQuery("SELECT * FROM TaiLieu WHERE isFree = ?", new String[]{isFree ? "1" : "0"});
     }
 
 
@@ -322,17 +297,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (result1 != -1 && result2 != -1);
     }
 
-    //lọc tài liệu theo loại tài liệu và theo loại tài liệu có phí hay mất  phí
     public Cursor getDocumentsByLoaiTaiLieuAndType(int loaiTaiLieuId, boolean isFree) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM TaiLieu WHERE idLoaiTaiLieu = ? AND isFree = ?";
         return db.rawQuery(query, new String[]{String.valueOf(loaiTaiLieuId), isFree ? "1" : "0"});
     }
-//    public Cursor getAllDocuments() {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        return db.rawQuery("SELECT * FROM TaiLieu WHERE  TrangThai = 1", null);
-//    }
-    //lọc tài liệu theo loại tài liệu
     public Cursor getDocumentsByLoaiTaiLieu(int loaiTaiLieuId){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -353,45 +322,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return db.query("TaiLieu", projection, selection, selectionArgs, null, null, null);
     }
-//    public String getTacGiaByIdAccount(int idAccount) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String tacGia = null;
-//
-//        Cursor cursor = db.rawQuery("SELECT tenNguoiDung FROM Account WHERE id = ?", new String[]{String.valueOf(idAccount)});
-//        if (cursor != null) {
-//            if (cursor.moveToFirst()) {
-//                int columnIndex = cursor.getColumnIndex("tenNguoiDung");
-//                if (columnIndex != -1) { // Kiểm tra xem cột có tồn tại không
-//                    tacGia = cursor.getString(columnIndex);
-//                } else {
-//                    Log.e("DatabaseHelper", "Column 'tenNguoiDung' not found in cursor");
-//                }
-//            }
-//            cursor.close(); // Đóng Cursor sau khi sử dụng
-//        }
-//        return tacGia;
-//    }
-    //lấy tác giả theo idAccount
     public String getTacGiaByIdAccount(int idAccount) {
         SQLiteDatabase db = this.getReadableDatabase();
         String tacGia = null;
 
-        Cursor cursor = db.rawQuery("SELECT tenDangNhap FROM Account WHERE id = ?", new String[]{String.valueOf(idAccount)});
+        Cursor cursor = db.rawQuery("SELECT tenNguoiDung FROM Account WHERE id = ?", new String[]{String.valueOf(idAccount)});
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndex("tenDangNhap");
-                if (columnIndex != -1) {
+                int columnIndex = cursor.getColumnIndex("tenNguoiDung");
+                if (columnIndex != -1) { // Kiểm tra xem cột có tồn tại không
                     tacGia = cursor.getString(columnIndex);
                 } else {
-                    Log.e("DatabaseHelper", "Column 'tenDangNhap' not found in cursor");
+                    Log.e("DatabaseHelper", "Column 'tenNguoiDung' not found in cursor");
                 }
             }
-            cursor.close();
+            cursor.close(); // Đóng Cursor sau khi sử dụng
         }
         return tacGia;
     }
-
-
     public String getSDTByIdAccount(int idAccount) {
         SQLiteDatabase db = this.getReadableDatabase();
         String sdt = null;
@@ -406,7 +354,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Log.e("DatabaseHelper", "Column 'soDienThoai' not found in cursor");
                 }
             }
-            cursor.close();
+            cursor.close(); // Đóng Cursor sau khi sử dụng
         }
         return sdt;
     }

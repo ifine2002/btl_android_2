@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,36 +12,21 @@
 
         <TextView
             android:id="@+id/tieuDe"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="Luận văn tiến sĩ"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
-
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
+            android:text="Luận văn tiến sĩ"
             android:layout_gravity="center"
-            android:background="#DD7A7A"
+            android:background="#B35575"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:textColor="#FFFFFF"
+            android:textSize="32dp"
+            />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tác giả:" />
 
-            <TextView
-                android:id="@+id/tacGia"
-                android:layout_width="wrap_content"
-                android:text=""
-                android:layout_height="wrap_content"
-                />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -51,51 +36,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=""
+            android:text="Vũ đình vinh"
+            android:layout_gravity="center"
             android:textSize="18dp"
-
+            android:textColor="@color/black"
             />
     </LinearLayout>
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:padding="20dp"-->
+    <!--        android:orientation="horizontal">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/noiDung"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:text="vinh"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:textSize="22dp"-->
+
+    <!--            />-->
+    <!--    </LinearLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/noiDung"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=""
-            android:textSize="18dp"
-
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:padding="20dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/gia"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:background="#D0EAB2"
+            android:background="#F84568"
             android:gravity="center"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:text="100.000"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            />
 
         <Button
             android:id="@+id/btnXemChiTiet"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="140dp"
-            android:background="@color/white"
-            android:backgroundTint="@null"
+            android:layout_height="60dp"
+            android:layout_marginLeft="80dp"
+            android:layout_weight="1"
+            android:backgroundTint="#008EFF"
+            android:textSize="14dp"
             android:text="Xem chi tiết"
-            android:textSize="14dp" />
+            />
+
     </LinearLayout>
 </LinearLayout>
