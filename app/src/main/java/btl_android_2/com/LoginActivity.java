@@ -45,9 +45,6 @@ public class LoginActivity extends AppCompatActivity {
                 Cursor cursor = myDb.checkUser(username, password);
                 if (cursor.moveToFirst()) {
                     int isAdmin = cursor.getInt(cursor.getColumnIndexOrThrow("isAdmin"));
-                    MainActivity.tenDangNhap = username;
-                    MainActivity.Id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-
                     cursor.close();
 
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();

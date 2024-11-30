@@ -116,10 +116,6 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -128,38 +124,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nội dung:"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:name="android.permission.READ_EXTERNAL_STORAGE"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/chon_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chọn file" />
-
-            </LinearLayout>
+                android:orientation="vertical"/>
 
             <Space
                 android:layout_width="10dp"
                 android:layout_height="match_parent" />
 
-            <EditText
-                android:id="@+id/edt_noi_dung"
-                android:padding="10dp"
-                android:gravity="start"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:inputType="textMultiLine"
-                android:background="@drawable/border_edittext"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
         </LinearLayout>
 

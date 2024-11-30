@@ -3,6 +3,8 @@ package btl_android_2.com;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +54,17 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Mật khẩu xác nhận không trùng khớp", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // Kiểm tra username đã tồn tại
+                if (myDb.checkUsernameExist(username)) {
+                    Toast.makeText(RegisterActivity.this, "Tên đăng nhập đã được sử dụng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Kiểm tra số điện thoại đã tồn tại
+                if (myDb.checkPhoneExist(phone)) {
+                    Toast.makeText(RegisterActivity.this, "Số điện thoại đã được sử dụng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
 
                 boolean isInserted = myDb.insertData(phone, username, password);
@@ -74,4 +87,29 @@ public class RegisterActivity extends AppCompatActivity {
         });
         
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            // Xử lý sự kiện khi nhấn vào menu "Đăng xuất"
+            logout();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        // Chuyển đến màn hình đăng nhập
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Đóng màn hình MainActivity
+    }
+
 }

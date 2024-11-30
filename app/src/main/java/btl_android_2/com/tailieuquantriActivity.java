@@ -3,6 +3,7 @@ package btl_android_2.com;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,10 +20,13 @@ public class tailieuquantriActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
     private int documentId;
-    private TextView tvTitle, tvUser, tvPrice, tvContent;
+    private TextView tvTitle, tvUser, tvPrice;
     private Spinner spinnerLoaiTaiLieu;
     private Button btnDuyet, btnTuChoi;
 
+    private String content;
+
+    private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +37,7 @@ public class tailieuquantriActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.txtTieuDe);
         tvUser = findViewById(R.id.txtTacGia);
         tvPrice = findViewById(R.id.txtGia);
-        tvContent = findViewById(R.id.txtNoiDung);
+        webView = findViewById(R.id.webView2);
         spinnerLoaiTaiLieu = findViewById(R.id.spinnerLoaiTaiLieu);
         btnDuyet = findViewById(R.id.btnDuyet);
         btnTuChoi = findViewById(R.id.btnTuChoi);
@@ -74,7 +78,7 @@ public class tailieuquantriActivity extends AppCompatActivity {
             tvTitle.setText(title);
             tvUser.setText(user);
             tvPrice.setText(price + " VNĐ");
-            tvContent.setText(content);
+            webView.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
 
             cursor.close();
         }

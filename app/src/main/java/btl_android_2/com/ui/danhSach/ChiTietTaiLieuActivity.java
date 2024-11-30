@@ -17,7 +17,7 @@ import androidx.core.app.ActivityCompat;
 import btl_android_2.com.R;
 import btl_android_2.com.ui.DBSQLite.DatabaseHelper;
 
-public class activity_tailieu extends AppCompatActivity {
+public class ChiTietTaiLieuActivity extends AppCompatActivity {
 
     private TextView txtTieuDe, txtTacGia, txtMoTa, txtNoiDung, txtGia, txtSoDienThoai;
     ImageButton btn;
@@ -91,9 +91,9 @@ public class activity_tailieu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent call=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+txtSoDienThoai.getText().toString().trim()));
-                if (ActivityCompat.checkSelfPermission(activity_tailieu.this,
+                if (ActivityCompat.checkSelfPermission(ChiTietTaiLieuActivity.this,
                         android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(activity_tailieu.this, new
+                    ActivityCompat.requestPermissions(ChiTietTaiLieuActivity.this, new
                             String[]{android.Manifest.permission.CALL_PHONE}, 1);
                     return;
                 }

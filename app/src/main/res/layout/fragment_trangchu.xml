@@ -33,52 +33,5 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
-
-            <Button
-                android:id="@+id/btnTaiLieuCuaToi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tài liệu của tôi"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:id="@+id/btnDanhSachTaiLieu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Danh sách tài liệu"
-                android:layout_marginStart="8dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <Button
-                android:id="@+id/btnChiaSeTaiLieu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Chia sẻ tài liệu"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:id="@+id/btnDangBanTaiLieu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Đăng bán tài liệu"
-                android:layout_marginStart="8dp"/>
-        </LinearLayout>
-
     </LinearLayout>
 </FrameLayout>

@@ -6,10 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,17 +28,16 @@ public class TrangchuquantriActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trangchuquantri);
-
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         db = DatabaseHelper.getInstance(this);
         mainLayout = findViewById(R.id.main);
         pendingCountTextView = findViewById(R.id.txtDemChoDuyet);
 //        SQLiteDatabase db = DatabaseHelper.getInstance(this).getWritableDatabase();
 //        int rowsDeleted = db.delete("TaiLieu", null, null);
-//        int rowsDeleted2 = db.delete("Account", "tenDangNhap = ?", new String[]{"user1"});
-//        int rowsDeleted3 = db.delete("Account", "tenDangNhap = ?", new String[]{"user1"});
+//        int rowsDeleted2 = db.delete("Account", null, null);
 //        int delete= db.delete("LoaiTaiLieu",null,null);
         loadPendingDocuments();
-
     }
 
     private void loadPendingDocuments() {
@@ -102,8 +104,30 @@ public class TrangchuquantriActivity extends AppCompatActivity {
                 updatePendingCount();
             }
         });
-
         mainLayout.addView(documentView);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (id == R.id.action_settings) {
+            // Xử lý sự kiện khi nhấn vào menu "Đăng xuất"
+            logout();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        // Chuyển đến màn hình đăng nhập
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Đóng màn hình MainActivity
+    }
 }
