@@ -9,12 +9,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="130dp">
-        <TextView
-            android:textColor="@color/white"
-            android:background="#A0EA93"
+            <TextView
+            android:textColor="@color/purple_700"
+                android:background="@drawable/bgchiase"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:layout_weight="1"
             android:textSize="28sp"
+                android:shadowColor="#80000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="1.5"
             android:text="Chia sẻ Tài Liệu"
             android:gravity="center"
             />
@@ -24,7 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+
         >
 
 
@@ -34,24 +42,25 @@
             >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Tên tài liệu:"
+                android:layout_width="0dp"
+                android:textColor="@color/material_dynamic_primary40"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Tên:"
+                android:textStyle="bold"
                 android:textSize="18sp"
-                android:gravity="center"/>
+                android:gravity="left"/>
 
-            <Space
-                android:layout_width="5dp"
-                android:layout_height="match_parent" />
 
             <EditText
 
                 android:id="@+id/ten_tai_lieu"
                 android:padding="10dp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="5"
                 android:layout_height="50dp"
                 android:inputType="text"
-                android:background="@drawable/border_edittext"/>
+              />
 
         </LinearLayout>
 
@@ -65,23 +74,24 @@
             >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:textColor="@color/material_dynamic_primary40"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Mô tả:"
+                android:textStyle="bold"
+                android:gravity="left"
                 android:textSize="18sp" />
 
-            <Space
-                android:layout_width="45dp"
-                android:layout_height="match_parent" />
 
             <EditText
                 android:id="@+id/mo_ta"
                 android:padding="10dp"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:inputType="textMultiLine"
-                android:background="@drawable/border_edittext"/>
+                />
 
         </LinearLayout>
 
@@ -99,35 +109,38 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/material_dynamic_primary40"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Nội dung:"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/chon_file"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/article_24dp_fill0_wght400_grad0_opsz24"
+            android:text="Chọn file" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:padding="15dp"
         >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nội dung:"
-                android:textSize="18sp" />
-
-            <Button
-                android:layout_marginTop="20dp"
-                android:id="@+id/chon_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chọn file" />
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
 
         <EditText
             android:id="@+id/noi_dung"
@@ -141,15 +154,12 @@
 
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
 
     <Button
-        android:layout_margin="10dp"
         android:id="@+id/chia_se"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="61dp"
+        android:layout_margin="10dp"
         android:text="Chia sẻ" />
 
 </LinearLayout>
