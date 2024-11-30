@@ -64,6 +64,9 @@ public class fragment_dangban extends Fragment {
                 Log.d("FragmentDangban", "Document shared to database");
 
                 showDialog(requireContext(), "Đăng bán tài liệu thành công");
+                etTenTaiLieu.setText("");
+                etMoTa.setText("");
+                etGia.setText("");
             }
         });
 
