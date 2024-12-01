@@ -135,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getLatestDocuments(int limit) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM TaiLieu ORDER BY id DESC LIMIT ?";
+        String query = "SELECT * FROM TaiLieu WHERE trangThai = 1 ORDER BY id DESC LIMIT ?";
         return db.rawQuery(query, new String[]{String.valueOf(limit)});
     }
     //lấy tài liệu theo id
