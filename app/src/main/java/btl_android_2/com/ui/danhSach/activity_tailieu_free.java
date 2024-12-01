@@ -53,7 +53,7 @@ public class activity_tailieu_free extends AppCompatActivity {
         txtGia = findViewById(R.id.gia1);
         btn = findViewById(R.id.btnDownload);
         databaseHelper = new DatabaseHelper(this);
-
+        // nhận dữ liệu tài liệu
         Intent intent = getIntent();
         if (intent != null) {
             TaiLieu taiLieu = intent.getParcelableExtra("taiLieu");
@@ -91,7 +91,7 @@ public class activity_tailieu_free extends AppCompatActivity {
 
         getView();
     }
-
+        // sử lý quyền truy cập vào độ nhớ ngoài
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -104,7 +104,7 @@ public class activity_tailieu_free extends AppCompatActivity {
             }
         }
     }
-
+        // thuc hiện lưu file
     public void getView() {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +114,7 @@ public class activity_tailieu_free extends AppCompatActivity {
             }
         });
     }
-
+    // luu file vào bộ nhớ ngoài trong thư mục Documents
     private void saveDataToFile(String fileName, String data) {
         File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString());
         if (!directory.exists()) {
@@ -140,7 +140,7 @@ public class activity_tailieu_free extends AppCompatActivity {
             }
         }
     }
-
+    // set thời gian lưu
     private String getCurrentTimeStamp() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         return sdf.format(new Date());

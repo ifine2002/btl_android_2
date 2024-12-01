@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -41,29 +40,23 @@ public class fragment_danhsach extends Fragment {
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
         spinnerLoc = view.findViewById(R.id.spinner_loc);
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // Set layout cho RecyclerView
         taiLieuList = new ArrayList<>();
         adapter = new TaiLieuAdapter(getContext(), taiLieuList, this::showDetails);
         recyclerView.setAdapter(adapter);
 
         databaseHelper = DatabaseHelper.getInstance(getContext());
-//        databaseHelper.deleteDatabase(context);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.filter_options, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFilter.setAdapter(spinnerAdapter);
 
-//        ArrayAdapter<CharSequence> spinnerAdapter2 = ArrayAdapter.createFromResource(getContext(),
-//                R.array.fillter_loc1, android.R.layout.simple_spinner_item);
-//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerLoc.setAdapter(spinnerAdapter2);
-
-        loadLoaiTaiLieuToSpinner();
+        loadLoaiTaiLieuToSpinner(); // Tải dữ liệu loại tài liệu vào spinner
 
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filterDocuments();
+                filterDocuments(); // Lọc tài liệu khi chọn spinner
             }
 
             @Override
@@ -74,22 +67,21 @@ public class fragment_danhsach extends Fragment {
         spinnerLoc.setOnItemSelectedListener(onItemSelectedListener);
         spinnerFilter.setOnItemSelectedListener(onItemSelectedListener);
 
-        loadTaiLieu(0);
+        loadTaiLieu(0); // Tải tất cả tài liệu
 
         return view;
     }
 
     private void loadLoaiTaiLieuToSpinner() {
         List<String> loaiTaiLieuList = new ArrayList<>();
-        loaiTaiLieuList.add("Tất cả tài liệu"); // Thêm tùy chọn "Tất cả tài liệu"
+        loaiTaiLieuList.add("Tất cả tài liệu");
         Cursor cursor = databaseHelper.getAllLoaiTaiLieu();
-        int loaiTaiLieuId = spinnerLoc.getSelectedItemPosition();
+//        int loaiTaiLieuId = spinnerLoc.getSelectedItemPosition();
 
         if (cursor != null && cursor.moveToFirst()) {
             int tenLoaiIndex = cursor.getColumnIndex("ten");
-            loaiTaiLieuId++;
+//            loaiTaiLieuId++;
             do {
-
                 if (tenLoaiIndex != -1) {
                     String tenLoai = cursor.getString(tenLoaiIndex);
                     loaiTaiLieuList.add(tenLoai);
@@ -103,13 +95,14 @@ public class fragment_danhsach extends Fragment {
         spinnerLoc.setAdapter(adapter);
     }
 
+    // lọc tài liệu theo loại có phí hay mất phí
     private void loadTaiLieu(int filterType) {
         taiLieuList.clear();
         Cursor cursor;
         if (filterType == 0) {
-            cursor = databaseHelper.getAllDocuments();
+            cursor = databaseHelper.getAllDocuments(); // Tải tất cả tài liệu
         } else {
-            cursor = databaseHelper.getDocumentsByType(filterType == 1);
+            cursor = databaseHelper.getDocumentsByType(filterType == 1); // Lọc tài liệu theo loại miễn phí hoặc không
         }
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -124,7 +117,8 @@ public class fragment_danhsach extends Fragment {
             int idLoaiTaiLieuIndex = cursor.getColumnIndex("idLoaiTaiLieu");
 
             do {
-                if (tieuDeIndex != -1 && moTaIndex != -1 && noiDungIndex != -1 && giaIndex != -1 && idAccountIndex != -1 && idLoaiTaiLieuIndex != -1) {
+                if (tieuDeIndex != -1 && moTaIndex != -1 && noiDungIndex != -1 && giaIndex != -1 && idAccountIndex != -1
+                        && idLoaiTaiLieuIndex != -1) {
                     int id = cursor.getInt(idIndex);
                     String tieuDe = cursor.getString(tieuDeIndex);
                     String moTa = cursor.getString(moTaIndex);
@@ -147,26 +141,27 @@ public class fragment_danhsach extends Fragment {
 
         adapter.notifyDataSetChanged();
     }
-
+    //lọc tài liệu theo loại tài liệu
     private void filterDocuments() {
         taiLieuList.clear();
-        int loaiTaiLieuId = spinnerLoc.getSelectedItemPosition(); // Vị trí 0 tương ứng với "Tất cả tài liệu"
-        boolean isFree = spinnerFilter.getSelectedItemPosition() == 1; // Giả định 0: Tất cả, 1: Miễn phí, 2: Mất phí
+        int loaiTaiLieuId = spinnerLoc.getSelectedItemPosition();
+        boolean isFree = spinnerFilter.getSelectedItemPosition() == 1;
 
         Cursor cursor;
 
-        if (loaiTaiLieuId == 0) { // Tất cả tài liệu
-            if (spinnerFilter.getSelectedItemPosition() == 0) { // Tất cả tài liệu và trạng thái miễn phí/mất phí
-                cursor = databaseHelper.getAllDocuments();
+        if (loaiTaiLieuId == 0) {
+            if (spinnerFilter.getSelectedItemPosition() == 0) {
+                cursor = databaseHelper.getAllDocuments(); // Tải tất cả tài liệu
             } else {
-                cursor = databaseHelper.getDocumentsByType(isFree);
+                cursor = databaseHelper.getDocumentsByType(isFree); // Lọc tài liệu theo loại miễn phí hoặc không
             }
         } else {
-            loaiTaiLieuId--; // Giảm 1 để khớp với idLoaiTaiLieu trong cơ sở dữ liệu
-            if (spinnerFilter.getSelectedItemPosition() == 0) { // Tất cả tài liệu theo loại tài liệu
-                cursor = databaseHelper.getDocumentsByLoaiTaiLieu(loaiTaiLieuId);
+            loaiTaiLieuId--;
+            if (spinnerFilter.getSelectedItemPosition() == 0) {
+                cursor = databaseHelper.getDocumentsByLoaiTaiLieu(loaiTaiLieuId); // Lọc tài liệu theo loại
             } else {
-                cursor = databaseHelper.getDocumentsByLoaiTaiLieuAndType(loaiTaiLieuId, isFree);
+                cursor = databaseHelper.getDocumentsByLoaiTaiLieuAndType(loaiTaiLieuId, isFree); // Lọc tài liệu theo loại và trạng thái
+                // miễn phí
             }
         }
 
@@ -182,7 +177,8 @@ public class fragment_danhsach extends Fragment {
             int idLoaiTaiLieuIndex = cursor.getColumnIndex("idLoaiTaiLieu");
 
             do {
-                if (tieuDeIndex != -1 && moTaIndex != -1 && noiDungIndex != -1 && giaIndex != -1 && idAccountIndex != -1 && idLoaiTaiLieuIndex != -1) {
+                if (tieuDeIndex != -1 && moTaIndex != -1 && noiDungIndex != -1 && giaIndex != -1 && idAccountIndex != -1 &&
+                        idLoaiTaiLieuIndex != -1) {
                     int id = cursor.getInt(idIndex);
                     String tieuDe = cursor.getString(tieuDeIndex);
                     String moTa = cursor.getString(moTaIndex);
@@ -205,18 +201,16 @@ public class fragment_danhsach extends Fragment {
 
         adapter.notifyDataSetChanged();
     }
+    //chuyển dữ liệu của tài liệu sang activity có phí và mất phí
 
-    //    private void showDetails(TaiLieu taiLieu) {
-//        ChiTietTaiLieuActivity.startActivity(getContext(), taiLieu);
-//    }
     private void showDetails(TaiLieu taiLieu) {
         try {
             if (taiLieu != null) {
                 Intent intent;
                 if (taiLieu.isFree()) {
-                    intent = new Intent(getContext(), activity_tailieu_free.class);
+                    intent = new Intent(getContext(), activity_tailieu_free.class); // Mở activity tài liệu miễn phí
                 } else {
-                    intent = new Intent(getContext(), activity_tailieu.class);
+                    intent = new Intent(getContext(), activity_tailieu.class); // Mở activity tài liệu có phí
                 }
                 intent.putExtra("taiLieu", taiLieu);
                 startActivity(intent);
@@ -228,5 +222,4 @@ public class fragment_danhsach extends Fragment {
             e.printStackTrace();
         }
     }
-
 }

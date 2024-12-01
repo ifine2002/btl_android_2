@@ -36,7 +36,7 @@ public class activity_tailieu extends AppCompatActivity {
         btn = findViewById(R.id.btn_call);
 
         databaseHelper = new DatabaseHelper(this);
-
+        // nhận dữ liệu tài liệu
         Intent intent = getIntent();
         if (intent != null) {
             TaiLieu taiLieu = intent.getParcelableExtra("taiLieu");
@@ -73,19 +73,16 @@ public class activity_tailieu extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Lấy số điện thoại từ TextView và tạo Intent gọi điện
                 String phoneNumber = txtSoDienThoai.getText().toString().trim();
                 if (!phoneNumber.isEmpty()) {
                     Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
 
-                    // Kiểm tra quyền gọi điện
                     if (ActivityCompat.checkSelfPermission(activity_tailieu.this,
                             android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        // Nếu không có quyền, yêu cầu cấp quyền
+
                         ActivityCompat.requestPermissions(activity_tailieu.this, new
                                 String[]{android.Manifest.permission.CALL_PHONE}, 1);
                     } else {
-                        // Bắt đầu cuộc gọi
                         startActivity(callIntent);
                     }
                 } else {
