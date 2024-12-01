@@ -8,8 +8,10 @@ import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +34,7 @@ import btl_android_2.com.ui.DBSQLite.DatabaseHelper;
 public class activity_tailieu_free extends AppCompatActivity {
 
     private TextView txtTieuDe, txtTacGia, txtMoTa, txtGia;
-    private ImageButton btn;
+    private Button btn;
 
     private WebView webView;
     private String nd;
@@ -49,7 +51,7 @@ public class activity_tailieu_free extends AppCompatActivity {
         txtMoTa = findViewById(R.id.moTa1);
         webView = findViewById(R.id.webView);
         txtGia = findViewById(R.id.gia1);
-        btn = findViewById(R.id.btn_call);
+        btn = findViewById(R.id.btnDownload);
         databaseHelper = new DatabaseHelper(this);
 
         Intent intent = getIntent();
@@ -80,6 +82,12 @@ public class activity_tailieu_free extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_WRITE_STORAGE);
         }
+        TaiLieu taiLieu = intent.getParcelableExtra("taiLieu");
+//        if (taiLieu != null) {
+//            Log.d("ID_ACCOUNT_DEBUG", "idAccount: " + taiLieu.getIdAccount());
+//            // Tiếp tục xử lý dữ liệu
+//        }
+
 
         getView();
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -209,14 +210,23 @@ public class fragment_danhsach extends Fragment {
 //        ChiTietTaiLieuActivity.startActivity(getContext(), taiLieu);
 //    }
     private void showDetails(TaiLieu taiLieu) {
-        if (taiLieu.isFree()) {
-            Intent intent = new Intent(getContext(), activity_tailieu_free.class);
-            intent.putExtra("taiLieu", taiLieu);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(getContext(), activity_tailieu.class);
-            intent.putExtra("taiLieu", taiLieu);
-            startActivity(intent);
+        try {
+            if (taiLieu != null) {
+                Intent intent;
+                if (taiLieu.isFree()) {
+                    intent = new Intent(getContext(), activity_tailieu_free.class);
+                } else {
+                    intent = new Intent(getContext(), activity_tailieu.class);
+                }
+                intent.putExtra("taiLieu", taiLieu);
+                startActivity(intent);
+            } else {
+                Log.e("showDetails", "TaiLieu object is null");
+            }
+        } catch (Exception e) {
+            Log.e("showDetails", "Exception: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
 }

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String tenDangNhap;
 
-
+    TextView txt;
     public static Integer Id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 //        transaction.replace(R.id.fragment_container, fragment);
 //        transaction.commit();
-
+        txt=findViewById(R.id.icon);
 
     }
  private  void deletevdc(){
@@ -106,12 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void thamchieu_database(){
-
-/////////////////////////////////////////////////////////// test database
-        //Tham chiếu database
         dbHelper = DatabaseHelper.getInstance(this);
-
-
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //ví dụ thêm dữ liệu vào database bảng Account. Chạy thử thấy hiển thị được thì xóa đi

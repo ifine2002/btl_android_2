@@ -1,13 +1,12 @@
 package btl_android_2.com.ui.danhSach;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,12 +15,14 @@ import androidx.core.app.ActivityCompat;
 
 import btl_android_2.com.R;
 import btl_android_2.com.ui.DBSQLite.DatabaseHelper;
+//import btl_android_2.com.ui.models.TaiLieu;
 
 public class activity_tailieu extends AppCompatActivity {
 
-    private TextView txtTieuDe, txtTacGia, txtMoTa, txtNoiDung, txtGia, txtSoDienThoai;
-    ImageButton btn;
+    private TextView txtTieuDe, txtTacGia, txtMoTa, txtGia, txtSoDienThoai;
+    private Button btn;
     private DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,46 +31,35 @@ public class activity_tailieu extends AppCompatActivity {
         txtTieuDe = findViewById(R.id.tieuDe1);
         txtTacGia = findViewById(R.id.tacGia1);
         txtMoTa = findViewById(R.id.moTa1);
-//        txtNoiDung = findViewById(R.id.noiDung1);
         txtGia = findViewById(R.id.gia1);
-        txtSoDienThoai=findViewById(R.id.soDienThoai1);
-        btn=findViewById(R.id.btn_call);
+        txtSoDienThoai = findViewById(R.id.soDienThoai1);
+        btn = findViewById(R.id.btn_call);
+
+        databaseHelper = new DatabaseHelper(this);
 
         Intent intent = getIntent();
         if (intent != null) {
             TaiLieu taiLieu = intent.getParcelableExtra("taiLieu");
             if (taiLieu != null) {
-                if(taiLieu.getIdAccount()==-1){
+                txtTieuDe.setText(taiLieu.getTieuDe());
+                if (taiLieu.getIdAccount() != -1) {
                     String tenTacGia = databaseHelper.getTacGiaByIdAccount(taiLieu.getIdAccount());
                     if (tenTacGia != null) {
                         txtTacGia.setText(tenTacGia);
                     } else {
-                        txtTacGia.setText("Không có tác giả"); // Xử lý trường hợp không tìm thấy tác giả
+                        txtTacGia.setText("Không có tác giả");
                     }
-                    String sdt=databaseHelper.getSDTByIdAccount(taiLieu.getIdAccount());
-                    if(sdt!=null){
+                    String sdt = databaseHelper.getSDTByIdAccount(taiLieu.getIdAccount());
+                    if (sdt != null) {
                         txtSoDienThoai.setText(sdt);
                     }
                 }
+                String mota_html = taiLieu.getMoTa();
+                txtMoTa.setText(Html.fromHtml(mota_html, Html.FROM_HTML_MODE_COMPACT));
 
-
-                txtTieuDe.setText(taiLieu.getTieuDe());
-                String mota_html=taiLieu.getMoTa();
-//                +"<p>"+"vinhbrqua"+"</q>";
-//                txtNoiDung.setText(Html.fromHtml(
-//                        noidung_html,Html.FROM_HTML_MODE_COMPACT
-//                ));
-                txtMoTa.setText(Html.fromHtml(
-                        mota_html,Html.FROM_HTML_MODE_COMPACT
-                ));
-//                txtMoTa.setText();
-
-//                txtNoiDung.setText(taiLieu.getNoiDung());
-//                txtSoDienThoai.setText(taiLieu.getSoDienThoai());
-                if(taiLieu.getGia()==0){
-                    txtGia.setText("vinhbr");;
-                }
-                else{
+                if (taiLieu.getGia() == 0) {
+                    txtGia.setText("Miễn phí");
+                } else {
                     txtGia.setText(taiLieu.getGia() + " VND");
                 }
             } else {
@@ -78,26 +68,29 @@ public class activity_tailieu extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Lỗi khi nhận dữ liệu", Toast.LENGTH_SHORT).show();
         }
-        getView();
-    }
 
-    public static void startActivity(Context context, TaiLieu taiLieu) {
-        Intent intent = new Intent(context, ChiTietTaiLieuActivity.class);
-        intent.putExtra("taiLieu", taiLieu);
-        context.startActivity(intent);
-    }
-    public void getView(){
+        // Xử lý sự kiện cho nút gọi điện
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent call=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+txtSoDienThoai.getText().toString().trim()));
-                if (ActivityCompat.checkSelfPermission(activity_tailieu.this,
-                        android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(activity_tailieu.this, new
-                            String[]{android.Manifest.permission.CALL_PHONE}, 1);
-                    return;
+                // Lấy số điện thoại từ TextView và tạo Intent gọi điện
+                String phoneNumber = txtSoDienThoai.getText().toString().trim();
+                if (!phoneNumber.isEmpty()) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+
+                    // Kiểm tra quyền gọi điện
+                    if (ActivityCompat.checkSelfPermission(activity_tailieu.this,
+                            android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // Nếu không có quyền, yêu cầu cấp quyền
+                        ActivityCompat.requestPermissions(activity_tailieu.this, new
+                                String[]{android.Manifest.permission.CALL_PHONE}, 1);
+                    } else {
+                        // Bắt đầu cuộc gọi
+                        startActivity(callIntent);
+                    }
+                } else {
+                    Toast.makeText(activity_tailieu.this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
                 }
-                startActivity(call);
             }
         });
     }

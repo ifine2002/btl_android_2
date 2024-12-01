@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SQLiteDB.db";
 
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 20;
     private static DatabaseHelper instance;
 
 
@@ -209,9 +209,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public Cursor getAllDocuments() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM TaiLieu WHERE TrangThai = 1", null);
+        return db.rawQuery("SELECT * FROM TaiLieu ", null);
     }
+//    WHERE  TrangThai = 1
 
+    //    WHERE TrangThai = 1
     // Phương thức để lấy các tài liệu đang chờ duyệt
     // Giả sử 0 là trạng thái chờ duyệt, 1 là đã duyệt, -1 là từ chối
     public Cursor getPendingDocuments() {
@@ -337,24 +339,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return db.query("TaiLieu", projection, selection, selectionArgs, null, null, null);
     }
+//    public String getTacGiaByIdAccount(int idAccount) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        String tacGia = null;
+//
+//        Cursor cursor = db.rawQuery("SELECT tenNguoiDung FROM Account WHERE id = ?", new String[]{String.valueOf(idAccount)});
+//        if (cursor != null) {
+//            if (cursor.moveToFirst()) {
+//                int columnIndex = cursor.getColumnIndex("tenNguoiDung");
+//                if (columnIndex != -1) { // Kiểm tra xem cột có tồn tại không
+//                    tacGia = cursor.getString(columnIndex);
+//                } else {
+//                    Log.e("DatabaseHelper", "Column 'tenNguoiDung' not found in cursor");
+//                }
+//            }
+//            cursor.close(); // Đóng Cursor sau khi sử dụng
+//        }
+//        return tacGia;
+//    }
+
     public String getTacGiaByIdAccount(int idAccount) {
         SQLiteDatabase db = this.getReadableDatabase();
         String tacGia = null;
 
-        Cursor cursor = db.rawQuery("SELECT tenNguoiDung FROM Account WHERE id = ?", new String[]{String.valueOf(idAccount)});
+        Cursor cursor = db.rawQuery("SELECT tenDangNhap FROM Account WHERE id = ?", new String[]{String.valueOf(idAccount)});
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndex("tenNguoiDung");
+                int columnIndex = cursor.getColumnIndex("tenDangNhap");
                 if (columnIndex != -1) { // Kiểm tra xem cột có tồn tại không
                     tacGia = cursor.getString(columnIndex);
                 } else {
-                    Log.e("DatabaseHelper", "Column 'tenNguoiDung' not found in cursor");
+                    Log.e("DatabaseHelper", "Column 'tenDangNhap' not found in cursor");
                 }
             }
             cursor.close(); // Đóng Cursor sau khi sử dụng
         }
         return tacGia;
     }
+
+
     public String getSDTByIdAccount(int idAccount) {
         SQLiteDatabase db = this.getReadableDatabase();
         String sdt = null;

@@ -10,4 +10,8 @@
     <color name="button">#DF7044</color>
     <color name="exit_button">#ef6c00</color>
     <color name="agree_button">#43a047</color>
+    <color name="material_dynamic_primary40">#FF3700B3</color>
+    <color name="button_color">#3F51B5</color>
+    <color name="button_stroke_color">#FF4081</color>
+    <color name="price_text">#4CAF50</color>
 </resources>

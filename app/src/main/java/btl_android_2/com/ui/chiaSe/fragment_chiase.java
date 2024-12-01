@@ -81,6 +81,9 @@ public class fragment_chiase extends Fragment {
                 Log.d("FragmentChiase", "Document shared to database");
 
                 showDialog(requireContext(), "Chia sẻ tài liệu thành công");
+                etMoTa.setText("");
+                etTenTaiLieu.setText("");
+                etNoiDung.setText("");
             }
         });
 

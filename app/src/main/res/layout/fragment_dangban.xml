@@ -137,21 +137,9 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:orientation="vertical"/>
-
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="match_parent" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-=======
                 android:orientation="vertical" />
 
 
->>>>>>> ecdcf48db3c3454c2e2da01afd605d72e5b75a0d
 
         </LinearLayout>
 

@@ -71,12 +71,14 @@ public class tailieuquantriActivity extends AppCompatActivity {
         Cursor cursor = db.getDocumentById(documentId);
         if (cursor != null && cursor.moveToFirst()) {
             String title = cursor.getString(cursor.getColumnIndexOrThrow("tieuDe"));
-            String user = cursor.getString(cursor.getColumnIndexOrThrow("idAccount"));
+            int authorId = cursor.getInt(cursor.getColumnIndexOrThrow("idAccount"));
+            String author;
+            author = db.getTacGiaByIdAccount(authorId);
             int price = cursor.getInt(cursor.getColumnIndexOrThrow("gia"));
             String content = cursor.getString(cursor.getColumnIndexOrThrow("noiDung"));
 
             tvTitle.setText(title);
-            tvUser.setText(user);
+            tvUser.setText(author);
             tvPrice.setText(price + " VNĐ");
             webView.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
 

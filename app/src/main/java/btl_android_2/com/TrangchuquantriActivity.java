@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,30 +42,30 @@ public class TrangchuquantriActivity extends AppCompatActivity {
     }
 
     private void loadPendingDocuments() {
-//        db.insertDummyUsers();
-//        db.insertDummyLoaiTaiLieu();
-//        db.insertDummyDocuments();
         Cursor cursor = db.getPendingDocuments();
         int count = cursor.getCount();
         pendingCountTextView.setText(String.valueOf(count));
 
         if (cursor.moveToFirst()) {
             do {
-
-                if (!cursor.isAfterLast()) {
-                    int documentId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-                    String title = cursor.getString(cursor.getColumnIndexOrThrow("tieuDe"));
-                    String author = cursor.getString(cursor.getColumnIndexOrThrow("idAccount"));
-                    String description = cursor.getString(cursor.getColumnIndexOrThrow("moTa"));
-                    int price = cursor.getInt(cursor.getColumnIndexOrThrow("gia"));
-                    addDocumentView(title, author, description, price, documentId);
+                int documentId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String title = cursor.getString(cursor.getColumnIndexOrThrow("tieuDe"));
+                int authorId = cursor.getInt(cursor.getColumnIndexOrThrow("idAccount"));
+                // Kiểm tra authorId có giá trị hợp lệ hay không
+                String author;
+                author = db.getTacGiaByIdAccount(authorId);
+                if (author == null) {
+                    author = "Unknown Author"; // Xử lý khi không tìm thấy tên tác giả
                 }
-
-
+                Log.d("trangchuquantri", "idAccount: " + authorId);
+                String description = cursor.getString(cursor.getColumnIndexOrThrow("moTa"));
+                int price = cursor.getInt(cursor.getColumnIndexOrThrow("gia"));
+                addDocumentView(title, author, description, price, documentId);
             } while (cursor.moveToNext());
         }
         cursor.close();
     }
+
 
     private void updatePendingCount() {
         Cursor cursor = db.getPendingDocuments();
@@ -79,14 +80,21 @@ public class TrangchuquantriActivity extends AppCompatActivity {
         View documentView = inflater.inflate(R.layout.item_tailieuquantri, mainLayout, false);
 
         TextView titleTextView = documentView.findViewById(R.id.txtTieuDe);
-        TextView authorTextView = documentView.findViewById(R.id.txtTacGia);
+        TextView authorTextView = documentView.findViewById(R.id.txtTacGiaName); // TextView để hiển thị tên tác giả
         TextView descriptionTextView = documentView.findViewById(R.id.txtMoTa);
         TextView priceTextView = documentView.findViewById(R.id.txtGia);
         Button btnXemChiTiet = documentView.findViewById(R.id.btnXemChiTiet);
         Button btnTuChoi = documentView.findViewById(R.id.btnTuChoi);
 
         titleTextView.setText(title);
-        authorTextView.setText(author);
+
+        // Kiểm tra và hiển thị tên tác giả
+        if (author != null) {
+            authorTextView.setText(author);
+        } else {
+            authorTextView.setText("Unknown Author");
+        }
+
         descriptionTextView.setText(description);
         priceTextView.setText(String.valueOf(price) + " VNĐ");
 
@@ -97,15 +105,18 @@ public class TrangchuquantriActivity extends AppCompatActivity {
         });
 
         btnTuChoi.setOnClickListener(v -> {
-            boolean success = db.capNhatTrangThai(documentId, -1,-1); // Trạng thái -1 cho từ chối
+            boolean success = db.capNhatTrangThai(documentId, -1, -1); // Trạng thái -1 cho từ chối
             if (success) {
-                // Tuỳ chọn xóa view hoặc cập nhật UI
                 mainLayout.removeView(documentView);
                 updatePendingCount();
             }
         });
+
         mainLayout.addView(documentView);
     }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

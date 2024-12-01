@@ -33,7 +33,7 @@ public class fragment_tailieucuatoi extends Fragment {
     }
 
     private void loadDocuments() {
-        Cursor cursor = databaseHelper.getDocumentsByUserId(1); // Kiểm tra truy vấn
+        Cursor cursor = databaseHelper.getDocumentsByUserId(MainActivity.Id); // Kiểm tra truy vấn
 
         if (cursor != null && cursor.moveToFirst()) { // Kiểm tra kết quả truy vấn
             do {
@@ -66,8 +66,8 @@ public class fragment_tailieucuatoi extends Fragment {
 
         textViewTitle.setText(title);
         textViewDescription.setText(description);
-        textViewPrice.setText("Price: " + price);
-        textViewStatus.setText("Status: " + (status == 0 ? "Pending" : "Approved"));
+        textViewPrice.setText("Giá: " + price);
+        textViewStatus.setText("Trạng thái: " + getStatusText(status));
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,4 +86,17 @@ public class fragment_tailieucuatoi extends Fragment {
 
         documentContainer.addView(documentItem);
     }
+    private String getStatusText(int status) {
+        switch (status) {
+            case 0:
+                return "Chờ duyệt";
+            case 1:
+                return "Đã duyệt";
+            case -1:
+                return "Từ chối";
+            default:
+                return "Unknown";
+        }
+    }
+
 }

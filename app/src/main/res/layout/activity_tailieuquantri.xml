@@ -21,12 +21,9 @@
             android:background="#E1F1AC"
             android:gravity="center"
             android:text="Luận văn tiến sĩ"
-            android:textColor="@color/black"
-            android:textSize="26dp" />
+            android:textColor="@android:color/black"
+            android:textSize="26sp" />
     </LinearLayout>
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,8 +48,8 @@
             android:background="#A0EA93"
             android:gravity="center"
             android:text="100.000"
-            android:textSize="18dp" />
-
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,8 +66,8 @@
             android:background="#EDC4C4"
             android:gravity="center"
             android:text="Tác giả: Vũ Đình Vinh"
-            android:textSize="18dp" />
-
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,7 +83,8 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="Số điện thoại"
-            android:textSize="16dp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txtSdt"
@@ -96,40 +94,19 @@
             android:background="#EAC4C4"
             android:gravity="center"
             android:text="0987736362"
-            android:textSize="16dp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
     </LinearLayout>
+
     <Spinner
         android:id="@+id/spinnerLoaiTaiLieu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center">
-        <Button
-            android:id="@+id/btnDuyet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/button"
-            android:backgroundTint="@null"
-            android:text="duyệt"
-            android:textSize="18dp"
-            android:layout_margin="10dp"/>
-        <Button
-            android:id="@+id/btnTuChoi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/button"
-            android:backgroundTint="@null"
-            android:text="từ chối"
-            android:textSize="18dp" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="471dp"
+        android:layout_height="400dp"
         android:orientation="horizontal"
         android:padding="20dp">
 
@@ -138,4 +115,32 @@
             android:layout_width="match_parent"
             android:layout_height="441dp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnDuyet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:text="Duyệt"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/btnTuChoi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:text="Từ chối"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
 </LinearLayout>
