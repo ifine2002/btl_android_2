@@ -87,29 +87,5 @@ public class RegisterActivity extends AppCompatActivity {
         });
         
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            // Xử lý sự kiện khi nhấn vào menu "Đăng xuất"
-            logout();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        // Chuyển đến màn hình đăng nhập
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish(); // Đóng màn hình MainActivity
-    }
 
 }
