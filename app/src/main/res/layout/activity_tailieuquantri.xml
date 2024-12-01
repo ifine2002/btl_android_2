@@ -35,112 +35,111 @@
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="300dp"
             android:background="#F0FBED"
             app:srcCompat="@drawable/user" />
-
-        <TextView
-            android:id="@+id/txtGia"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="-330dp"
-            android:background="#A0EA93"
-            android:gravity="center"
-            android:text="100.000"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <TextView
             android:id="@+id/txtTacGia"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="210dp"
-            android:background="#EDC4C4"
-            android:gravity="center"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_marginLeft="20dp"
+            android:textStyle="bold"
             android:text="Tác giả: Vũ Đình Vinh"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="Số điện thoại"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/txtSdt"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:background="#EAC4C4"
             android:gravity="center"
             android:text="0987736362"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtGia"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/priceColor"
+            android:gravity="center"
+            android:text="100.000" />
+
+
     </LinearLayout>
 
     <Spinner
         android:id="@+id/spinnerLoaiTaiLieu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:orientation="horizontal"
-        android:padding="20dp">
+        android:padding="10dp">
 
         <WebView
             android:id="@+id/webView2"
             android:layout_width="match_parent"
-            android:layout_height="441dp" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center">
+        android:layout_height="86dp"
+        android:layout_gravity="center">
 
         <Button
             android:id="@+id/btnDuyet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
+            android:layout_width="0dp"
+            android:layout_height="61dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#008800"
             android:text="Duyệt"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:layout_margin="10dp" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnTuChoi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+
+            android:layout_weight="1"
+            android:backgroundTint="#F40000"
             android:text="Từ chối"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:layout_margin="10dp" />
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

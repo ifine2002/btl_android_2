@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:padding="16dp"
 
-        android:background="@android:color/white">
+        android:background="@drawable/bgbook">
 
         <TextView
             android:layout_width="match_parent"

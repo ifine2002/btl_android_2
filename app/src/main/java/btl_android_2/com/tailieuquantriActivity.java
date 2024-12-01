@@ -48,8 +48,7 @@ public class tailieuquantriActivity extends AppCompatActivity {
 
         btnDuyet.setOnClickListener(v -> {
             // Lấy ID của loại tài liệu từ Spinner
-            String selectedLoaiTaiLieu = (String) spinnerLoaiTaiLieu.getSelectedItem();
-            int idLoaiTaiLieu = getIdLoaiTaiLieu(selectedLoaiTaiLieu);
+            long idLoaiTaiLieu = spinnerLoaiTaiLieu.getAdapter().getItemId(spinnerLoaiTaiLieu.getSelectedItemPosition());
 
             // Cập nhật trạng thái tài liệu thành đã duyệt (status = 1) và loại tài liệu
             updateDocumentStatus(1, idLoaiTaiLieu);
@@ -105,7 +104,7 @@ public class tailieuquantriActivity extends AppCompatActivity {
     }
 
 
-    private void updateDocumentStatus(int status, int idLoaiTaiLieu) {
+    private void updateDocumentStatus(int status, long idLoaiTaiLieu) {
         boolean success = db.capNhatTrangThai(documentId, status, idLoaiTaiLieu);
         if (success) {
             Intent resultIntent = new Intent();

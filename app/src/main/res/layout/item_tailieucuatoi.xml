@@ -1,16 +1,44 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="16dp"
+    card_view:cardElevation="4dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardUseCompatPadding="true">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     android:orientation="vertical">
 
-    <TextView
-        android:text="tieu de"
-        android:id="@+id/txtTieuDe"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="@android:color/black"
-        android:padding="8dp"/>
+        android:orientation="horizontal">
+        <TextView
+            android:text="tieu de"
+            android:id="@+id/txtTieuDe"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:padding="8dp"/>
+        <TextView
+            android:text="trang thai"
+            android:id="@+id/txtTrangThai"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_purple"
+            android:gravity="end"/>
+    </LinearLayout>
 
     <TextView
         android:text="mo ta"
@@ -23,7 +51,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="62dp"
         android:orientation="horizontal">
 
         <TextView
@@ -34,31 +62,24 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="gia"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/priceColor"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
-            android:text="xoa"
             android:id="@+id/btnXoa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#F40000"
+            android:padding="8dp"
+            android:text="xoa"
             android:textColor="@android:color/white"
-            android:padding="8dp"/>
-
-        <TextView
-            android:text="trang thai"
-            android:id="@+id/txtTrangThai"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:padding="8dp"/>
+            android:textStyle="bold" />
+
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray"/>
 </LinearLayout>
+</androidx.cardview.widget.CardView>

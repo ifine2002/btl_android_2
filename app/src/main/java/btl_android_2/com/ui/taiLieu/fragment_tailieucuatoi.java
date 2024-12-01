@@ -66,8 +66,11 @@ public class fragment_tailieucuatoi extends Fragment {
 
         textViewTitle.setText(title);
         textViewDescription.setText(description);
-        textViewPrice.setText("Giá: " + price);
-        textViewStatus.setText("Trạng thái: " + getStatusText(status));
+        if(price == 0)
+            textViewPrice.setText("Miễn phí");
+        else
+            textViewPrice.setText(price + " VNĐ");
+        textViewStatus.setText(getStatusText(status));
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override

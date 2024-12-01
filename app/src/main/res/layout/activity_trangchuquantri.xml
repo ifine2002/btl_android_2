@@ -14,13 +14,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="110dp"
+            android:background="@drawable/bg4"
+            android:orientation="horizontal"
+            android:padding="15px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tài liệu chờ duyệt: "/>
+                android:paddingLeft="15px"
+                android:text="Tài liệu chờ duyệt: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <!-- TextView để hiển thị số lượng tài liệu chờ duyệt -->
             <TextView
@@ -28,7 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="0"/> <!-- Giá trị mặc định là 0 -->
+                android:text="0"
+                android:textColor="@color/purple_700"
+                android:textSize="25sp"
+                android:textStyle="bold" /> <!-- Giá trị mặc định là 0 -->
         </LinearLayout>
 
         <!-- Các phần tử layout khác -->

@@ -209,7 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public Cursor getAllDocuments() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM TaiLieu ", null);
+        return db.rawQuery("SELECT * FROM TaiLieu Where TrangThai = 1", null);
     }
 //    WHERE  TrangThai = 1
 
@@ -223,7 +223,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Phương thức để cập nhật trạng thái tài liệu
-    public boolean capNhatTrangThai(int documentId, int status, int idLoaiTaiLieu) {
+    public boolean capNhatTrangThai(int documentId, int status, long idLoaiTaiLieu) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("trangThai", status); // Cập nhật trạng thái
