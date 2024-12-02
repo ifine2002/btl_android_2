@@ -73,6 +73,7 @@ public class activity_tailieu extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String phoneNumber = txtSoDienThoai.getText().toString().trim();
                 if (!phoneNumber.isEmpty()) {
                     Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
@@ -87,6 +88,7 @@ public class activity_tailieu extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(activity_tailieu.this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

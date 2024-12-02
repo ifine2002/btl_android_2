@@ -131,14 +131,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:background="@drawable/bgcon"
-            android:layout_height="323dp">
+            android:layout_height="141dp"
+            android:background="@drawable/bgcon">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-
 
 
         </LinearLayout>

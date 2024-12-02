@@ -46,6 +46,7 @@ public class fragment_danhsach extends Fragment {
         recyclerView.setAdapter(adapter);
 
         databaseHelper = DatabaseHelper.getInstance(getContext());
+
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.filter_options, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
